@@ -12,7 +12,6 @@ export const ADDR = {
 };
 
 const DAY = 864e5;
-const HOUR = 36e5;
 
 export function seedWorld() {
   return {
@@ -56,7 +55,7 @@ export function seedOwnerHistory(s, me, name, t) {
   });
   tx({ from: me, to: ADDR.aoife, amount: SOL(0.25), createdAt: t - 6 * DAY, memo: 'Pizza' });
   tx({ from: ADDR.aoife, to: me, amount: SOL(0.185), createdAt: t - 3 * DAY, memo: 'Taxi' });
-  tx({ from: ADDR.poison, to: me, amount: SOL(0.000001), createdAt: t - 3 * HOUR, flags: ['dust'] });
+  // No dust in a new wallet: the demo panel's "A lookalike address dusts you" triggers it on cue.
 
   s.contacts[me] = [
     { address: ADDR.aoife, name: 'Aoife Byrne', trusted: true, addedAt: t - 90 * DAY },

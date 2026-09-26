@@ -2,7 +2,7 @@
 import { esc, money, short, span, toLamports, LAMPORTS_PER_SOL } from '../format.js';
 import { ASSETS, usd } from '../assets.js';
 import { icon } from '../icons.js';
-import { resolveInput, analyze, commonPrefix, commonSuffix, amountCheck, suggestedHold } from '../guards.js';
+import { resolveInput, analyze, commonPrefix, commonSuffix, amountCheck, suggestedHold, needsPurpose, purposeFor, PURPOSES } from '../guards.js';
 import { HOLDS, holdMs, expiryMs } from '../ledger.js';
 import { bar, tabbar, who, avatar, personName, groupedAddress } from './shell.js';
 
@@ -166,7 +166,10 @@ export function amount(s, viewer, ui, t) {
   const lamports = toLamports(d.amount);
   const over = lamports > balance;
   const size = amountCheck(s, viewer, lamports);
-  const suggested = suggestedHold(c, size);
+  const askPurpose = needsPurpose(c, size);
+  const purpose = askPurpose ? purposeFor(d.purpose) : null;
+  const blocked = purpose?.risk === 'block';
+  const suggested = suggestedHold(c, size, purpose);
   const hold = d.hold || suggested;
   const options = HOLDS.filter((h) => h.key !== 'none' || c.trusted);
   const riskPill = {
@@ -211,14 +214,25 @@ export function amount(s, viewer, ui, t) {
       <p class="hold-explain">${explain}</p>
     </div>
 
-    <label class="memo"><span class="sr-only">What’s it for?</span>
-      <input id="send-memo" data-model="draft.memo" value="${esc(d.memo)}" placeholder="What’s it for? (optional)" maxlength="60" autocomplete="off">
+    <label class="memo"><span class="sr-only">Add a note</span>
+      <input id="send-memo" data-model="draft.memo" value="${esc(d.memo)}" placeholder="Add a note (optional)" maxlength="60" autocomplete="off">
     </label>
 
     <div class="keypad" role="group" aria-label="Amount keypad">
       ${keys.map((k) => `<button class="key" data-action="key" data-k="${k}" aria-label="${k === 'back' ? 'Delete' : k === '.' ? 'Decimal point' : k}">${k === 'back' ? icon('backspace', 24) : k}</button>`).join('')}
     </div>
 
-    <button class="btn primary" data-action="send-now" ${lamports > 0 && !over ? '' : 'disabled'}>Send ${esc(money(lamports))}</button>
+    ${askPurpose ? `<div class="card pad purpose-card">
+      <strong class="purpose-title" id="purpose-title">What’s this payment for?</strong>
+      <div class="purpose-grid" role="group" aria-labelledby="purpose-title">
+        ${PURPOSES.map((x) => `<button class="chip purpose" data-action="purpose" data-k="${x.key}" aria-pressed="${x.key === d.purpose}">${esc(x.label)}</button>`).join('')}
+      </div>
+      ${purpose?.risk ? `<div class="alert ${blocked ? 'stop' : ''}" role="status">
+        <span class="alert-icon">${icon('alert', 20)}</span>
+        <div class="alert-body"><strong>${esc(purpose.title)}</strong><p>${esc(purpose.body)}${blocked ? '' : ' Kagi will wait 24 hours before it goes, so you have time to check with someone you trust.'}</p></div>
+      </div>` : ''}
+    </div>` : ''}
+
+    <button class="btn primary" data-action="send-now" ${lamports > 0 && !over && !blocked && (!askPurpose || purpose) ? '' : 'disabled'}>${blocked ? 'Kagi won’t send this' : askPurpose && !purpose ? 'Choose what it’s for first' : `Send ${esc(money(lamports))}`}</button>
   </div>`;
 }

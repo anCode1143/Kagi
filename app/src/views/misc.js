@@ -107,6 +107,22 @@ export function receive(s, viewer) {
   ${tabbar('receive')}`;
 }
 
+// Shown over any screen when a recovery phrase is typed or pasted. The words are already wiped.
+export function phraseAlert() {
+  return `<div class="modal-backdrop">
+    <div class="modal" role="alertdialog" aria-modal="true" aria-labelledby="phrase-title" aria-describedby="phrase-body">
+      <span class="verdict-icon amber">${icon('alert', 26)}</span>
+      <h2 id="phrase-title" class="verdict-title">Stop. Never share your recovery phrase</h2>
+      <div id="phrase-body" class="modal-body">
+        <p>Those words are the key to your whole wallet. Anyone who has them can take everything in it, and nobody can get it back.</p>
+        <p><strong>Kagi will never ask for them, and no real company will either.</strong> If someone asked you to type or send them, it’s a scam. Stop talking to them.</p>
+        <p class="muted">We’ve cleared what you typed. It wasn’t saved or sent anywhere.</p>
+      </div>
+      <button class="btn primary" data-action="phrase-ok">I understand</button>
+    </div>
+  </div>`;
+}
+
 const NOTICE_ICON = { returned: 'undo', claimed: 'check', trusted: 'zap', dust: 'alert', incoming: 'clock', received: 'receive', cancelled: 'undo' };
 
 export function notices(s, viewer, t) {

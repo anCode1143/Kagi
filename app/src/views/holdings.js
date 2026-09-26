@@ -2,7 +2,7 @@
 // with the token list underneath doubling as legend and table.
 import { esc } from '../format.js';
 import { icon } from '../icons.js';
-import { holdingsFor, segments, usd, tokenAmount, percent } from '../assets.js';
+import { holdingsFor, unverifiedFor, segments, usd, tokenAmount, percent } from '../assets.js';
 import { bar, tabbar } from './shell.js';
 
 export function stackBar(parts, size = '') {
@@ -35,6 +35,7 @@ export function holdingsCard(account) {
 export function holdings(s, viewer) {
   const account = s.accounts[viewer];
   const rows = holdingsFor(account);
+  const spam = unverifiedFor(account);
   const parts = segments(rows);
   const total = rows.reduce((sum, r) => sum + r.value, 0);
   return `<div class="screen with-tabs">
@@ -61,6 +62,23 @@ export function holdings(s, viewer) {
         </span>
       </div>`).join('')}
     </div>
+
+    ${spam.length ? `
+      <div class="section-title"><span>Unverified tokens</span><span class="muted">${spam.length}</span></div>
+      <div class="alert">
+        <span class="alert-icon">${icon('alert', 20)}</span>
+        <div class="alert-body"><strong>These turned up without you asking</strong><p>Scammers send tokens named after a website, hoping you’ll visit it and connect your wallet. Don’t visit links in token names. Kagi leaves these out of your totals.</p></div>
+      </div>
+      <div class="card list gap-16">
+        ${spam.map((r) => `<div class="row asset-row">
+          <span class="token unverified" aria-hidden="true">?</span>
+          <span class="row-text">
+            <span class="row-title wrap">${esc(r.name)}</span>
+            <span class="row-sub tabular">${esc(tokenAmount(r.amount))} ${esc(r.symbol)}</span>
+          </span>
+          <span class="row-end"><span class="pill amber">Unverified</span></span>
+        </div>`).join('')}
+      </div>` : ''}
 
     <div class="alert blue gap-16">
       <span class="alert-icon">${icon('shield', 18)}</span>

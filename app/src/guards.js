@@ -146,11 +146,35 @@ export function amountCheck(s, viewer, lamports) {
   return { typical, largest, unusual, bigShare, flagged: unusual || bigShare };
 }
 
-// A big or unusual amount always gets at least a 1-hour hold, even for trusted people.
+// "What's this payment for?" The answers scammers push people towards get a warning or a block.
+export const PURPOSES = [
+  { key: 'family', label: 'Family or a friend' },
+  { key: 'buying', label: 'Buying something' },
+  { key: 'investment', label: 'An investment', risk: 'warn', title: 'Most investment offers from strangers are scams', body: 'If someone promised you big or guaranteed returns, stop. Real investments don’t come through messages from people you don’t know.' },
+  { key: 'online', label: 'Someone I met online', risk: 'warn', title: 'Scammers make friends online first', body: 'They can chat for weeks before asking for money. Never send money to someone you haven’t met in person.' },
+  { key: 'support', label: 'Support told me to', risk: 'warn', title: 'Real companies never ask you to move your crypto', body: 'Banks, exchanges and Kagi will never tell you to send money somewhere “to keep it safe”. This is a scam.' },
+  { key: 'giveaway', label: 'A giveaway or prize', risk: 'block', title: 'Kagi won’t send this', body: 'Nobody gives away crypto if you send some first. This is always a scam.' },
+  { key: 'other', label: 'Something else' },
+];
+export const purposeFor = (key) => PURPOSES.find((p) => p.key === key) || null;
+
+// Ask only when it matters: first payments, flagged addresses, and big or unusual amounts.
+export const needsPurpose = (check, amount) => check.risk === 'new' || check.risk === 'suspicious' || amount.flagged;
+
+// Big or unusual amounts wait at least 1 hour, even for trusted people; risky reasons wait 24 hours.
 const HOLD_ORDER = ['none', '10m', '1h', '24h'];
-export function suggestedHold(check, amount) {
-  if (!amount.flagged) return check.recommendedHold;
-  return HOLD_ORDER.indexOf(check.recommendedHold) >= HOLD_ORDER.indexOf('1h') ? check.recommendedHold : '1h';
+const atLeast = (hold, min) => (HOLD_ORDER.indexOf(hold) >= HOLD_ORDER.indexOf(min) ? hold : min);
+export function suggestedHold(check, amount, purpose = null) {
+  let hold = check.recommendedHold;
+  if (amount.flagged) hold = atLeast(hold, '1h');
+  if (purpose?.risk) hold = atLeast(hold, '24h');
+  return hold;
+}
+
+// Guard: a 12–24 word recovery phrase typed or pasted anywhere is blocked and never stored.
+export function looksLikeRecoveryPhrase(text) {
+  const words = String(text || '').trim().toLowerCase().split(/\s+/);
+  return words.length >= 12 && words.length <= 24 && words.every((w) => /^[a-z]{3,8}$/.test(w));
 }
 
 // Incoming dust from an address that imitates one you know: surfaced as an alert on Home.

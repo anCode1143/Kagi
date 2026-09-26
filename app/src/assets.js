@@ -23,6 +23,15 @@ const DEMO_HOLDINGS = {
   ciaran: { USDC: 12.4, JUP: 40 },
 };
 
+// Tokens that turned up uninvited. Scammers name them after a website ("claim at …") so people visit it.
+const UNVERIFIED = {
+  default: [
+    { symbol: 'CLAIM', name: 'Claim 5,000 USDC at sol-rewards.io', amount: 5000 },
+    { symbol: 'DROP', name: 'Airdrop voucher: visit jup-claim.net', amount: 1 },
+  ],
+};
+export const unverifiedFor = (account) => UNVERIFIED[account.username] || (DEMO_HOLDINGS[account.username] ? [] : UNVERIFIED.default);
+
 export function holdingsFor(account) {
   const extra = DEMO_HOLDINGS[account.username] || DEMO_HOLDINGS.default;
   const rows = [

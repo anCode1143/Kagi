@@ -23,6 +23,7 @@ export function demoPanel(s, viewer, t, ui) {
     <div class="demo-group">
       <h3>Make something happen</h3>
       <button class="demo-btn" data-action="demo-dust">${icon('alert', 18)} A lookalike address dusts you</button>
+      <button class="demo-btn" data-action="demo-phrase">${icon('key', 18)} Someone asks for your recovery phrase</button>
       <button class="demo-btn" data-action="demo-incoming">${icon('receive', 18)} ${esc(sender?.name.split(' ')[0] || 'Someone')} sends you 0.5 SOL (with a hold)</button>
       <button class="demo-btn" data-action="top-up">${icon('plus', 18)} Add 1 SOL of demo money</button>
     </div>

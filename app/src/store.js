@@ -7,7 +7,7 @@ const profile = new URLSearchParams(location.search).get('profile');
 const KEY = profile ? `kagi:v2:${profile}` : 'kagi:v2';
 
 export function freshDraft() {
-  return { input: '', address: null, amount: '0', memo: '', hold: null, ack: false };
+  return { input: '', address: null, amount: '0', memo: '', hold: null, ack: false, purpose: null };
 }
 
 // Small per-device preferences (e.g. whether Activity is expanded). Losing them is harmless.

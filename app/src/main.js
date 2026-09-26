@@ -1,7 +1,8 @@
 // Kagi: router, actions and the one-second clock that runs holds and auto-returns.
 import { store, ui, now, me, freshDraft, resetAll, setPref } from './store.js';
 import { settle, send, cancel, claim, topUp, setTrusted, addContact, simulateDust, simulateIncoming, phase } from './ledger.js';
-import { resolveInput, analyze, validUsername, amountCheck, suggestedHold } from './guards.js';
+import { resolveInput, analyze, validUsername, amountCheck, suggestedHold, needsPurpose, purposeFor, looksLikeRecoveryPhrase } from './guards.js';
+import { phraseAlert } from './views/misc.js';
 import { createWallet, connectWallet } from './wallet.js';
 import { randomAddress } from './base58.js';
 import { seedOwnerHistory, ADDR } from './seed.js';
@@ -47,14 +48,15 @@ function render() {
   const scrollTop = samePage ? app.querySelector('.screen')?.scrollTop || 0 : 0;
 
   const ctx = { s, viewer: me(), t: now(), ui };
-  app.innerHTML = renderRoute(route, ctx);
+  app.innerHTML = renderRoute(route, ctx) + (ui.phraseAlert ? phraseAlert() : '');
   demo.innerHTML = renderDemo(ctx);
   demo.classList.toggle('open', ui.demoOpen);
 
   const screen = app.querySelector('.screen');
   if (screen) screen.scrollTop = scrollTop;
-  if (focus) restoreFocus(focus);
-  if (!samePage) app.querySelector('[autofocus]')?.focus();
+  if (ui.phraseAlert) app.querySelector('.modal .btn')?.focus();
+  else if (focus) restoreFocus(focus);
+  else if (!samePage) app.querySelector('[autofocus]')?.focus();
   lastPath = route.path;
   phaseSignature = signature();
   updateLive();
@@ -241,7 +243,13 @@ const actions = {
   // Sending
   paste: async () => {
     try {
-      ui.draft.input = (await navigator.clipboard.readText()).trim();
+      const text = (await navigator.clipboard.readText()).trim();
+      if (looksLikeRecoveryPhrase(text)) {
+        ui.phraseAlert = true;
+        render();
+        return;
+      }
+      ui.draft.input = text;
       render();
       document.getElementById('send-to')?.focus();
     } catch {
@@ -274,16 +282,33 @@ const actions = {
     ui.draft.hold = d.k;
     render();
   },
+  purpose: (d) => {
+    ui.draft.purpose = d.k;
+    ui.draft.hold = null; // a risky answer raises the suggested wait, so drop any earlier choice
+    render();
+  },
+  'phrase-ok': () => {
+    ui.phraseAlert = false;
+    render();
+  },
+  'demo-phrase': () => {
+    ui.demoOpen = false;
+    ui.draft = freshDraft();
+    ui.phraseAlert = true;
+    go('send');
+  },
   'send-now': () => {
     const d = ui.draft;
     const viewer = me();
     const check = analyze(store.get(), viewer, d.address, now());
     const amount = toLamports(d.amount);
     const size = amountCheck(store.get(), viewer, amount);
-    const flags = size.flagged ? [...check.flags, 'unusual-amount'] : check.flags;
+    const purpose = needsPurpose(check, size) ? purposeFor(d.purpose) : null;
+    if (purpose?.risk === 'block') return;
+    const flags = [...check.flags, ...(size.flagged ? ['unusual-amount'] : []), ...(purpose?.risk ? [`purpose-${purpose.key}`] : [])];
     let tx;
     store.update((s) => {
-      tx = send(s, { from: viewer, to: d.address, amount, memo: d.memo.trim(), hold: d.hold || suggestedHold(check, size), flags });
+      tx = send(s, { from: viewer, to: d.address, amount, memo: d.memo.trim(), hold: d.hold || suggestedHold(check, size, purpose), flags });
     });
     ui.draft = freshDraft();
     go(`tx/${tx.id}`);
@@ -392,6 +417,14 @@ document.addEventListener('input', (e) => {
   const model = e.target.dataset?.model;
   if (!model) return;
   const [scope, key] = model.split('.');
+  // Recovery phrases are wiped from the box straight away and never kept anywhere.
+  if (looksLikeRecoveryPhrase(e.target.value)) {
+    e.target.value = '';
+    ui[scope][key] = '';
+    ui.phraseAlert = true;
+    render();
+    return;
+  }
   ui[scope][key] = e.target.value;
   if (scope === 'draft' && key === 'input') ui.draft.address = null;
   if (scope === 'contact' && key === 'to') ui.contact.ack = false;
@@ -399,8 +432,9 @@ document.addEventListener('input', (e) => {
 });
 
 document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape' && ui.demoOpen) {
+  if (e.key === 'Escape' && (ui.demoOpen || ui.phraseAlert)) {
     ui.demoOpen = false;
+    ui.phraseAlert = false;
     render();
     return;
   }
