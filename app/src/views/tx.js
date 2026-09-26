@@ -58,7 +58,7 @@ function outgoing(s, viewer, tx, t) {
             stroke-dasharray="${RING_C}" style="stroke-dashoffset:${RING_C * (1 - left)}"
             data-ring data-from="${tx.createdAt}" data-to="${tx.holdUntil}" data-c="${RING_C}"></circle>
         </svg>
-        <div class="ring-text"><span class="ring-time tabular" role="timer" data-until="${tx.holdUntil}">${clock(tx.holdUntil - t)}</span><span>left to undo</span></div>
+        <div class="ring-text"><span class="ring-time tabular" role="timer" aria-hidden="true" data-until="${tx.holdUntil}">${clock(tx.holdUntil - t)}</span><span data-words-until="${tx.holdUntil}" data-suffix="left to undo">${span(Math.max(1000, tx.holdUntil - t))} left to undo</span></div>
       </div>
       <div class="hold-amount">
         <strong class="tabular">${money(tx.amount)}</strong>
@@ -67,7 +67,7 @@ function outgoing(s, viewer, tx, t) {
       </div>
       ${timeline([
         { state: 'done', title: 'Sent into a hold', sub: `${esc(when(tx.createdAt, t))} · held by the escrow, not by Kagi` },
-        { state: 'now', title: 'You can undo', sub: `Until ${esc(at(tx.holdUntil, t))}` },
+        { state: 'now', title: 'You can still take it back', sub: `Until ${esc(at(tx.holdUntil, t))}` },
         { state: 'todo', title: 'They collect it', sub: `Any time after ${esc(at(tx.holdUntil, t))}` },
         { state: 'todo', title: 'Or it comes back to you', sub: `Automatically, if nobody collects it by ${esc(dateTime(tx.expiresAt))}` },
       ], true)}

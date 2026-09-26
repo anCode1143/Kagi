@@ -1,9 +1,10 @@
 // Sending: pick a recipient → Kagi checks it → choose amount and undo window.
-import { esc, money, short, span, toLamports } from '../format.js';
+import { esc, money, short, span, toLamports, LAMPORTS_PER_SOL } from '../format.js';
+import { ASSETS, usd } from '../assets.js';
 import { icon } from '../icons.js';
-import { resolveInput, analyze, commonPrefix, commonSuffix } from '../guards.js';
+import { resolveInput, analyze, commonPrefix, commonSuffix, amountCheck, suggestedHold } from '../guards.js';
 import { HOLDS, holdMs, expiryMs } from '../ledger.js';
-import { bar, tabbar, who, avatar, personName } from './shell.js';
+import { bar, tabbar, who, avatar, personName, groupedAddress } from './shell.js';
 
 function payeePill(contact) {
   return contact?.trusted
@@ -79,9 +80,6 @@ const CHECK_ICON = { ok: 'check', warn: 'clock', danger: 'alert', info: 'undo' }
 export function compare(entered, known, label, enteredLabel = 'You entered') {
   const pre = commonPrefix(entered, known);
   const suf = commonSuffix(entered, known, pre);
-  const cut = (a) => [a.slice(0, pre), a.slice(pre, a.length - suf), a.slice(a.length - suf)].map(esc);
-  const [ap, am, as] = cut(entered);
-  const [bp, bm, bs] = cut(known);
   const same = short(entered) === short(known);
   return `<div class="card pad compare">
     <div class="compare-short">
@@ -90,8 +88,8 @@ export function compare(entered, known, label, enteredLabel = 'You entered') {
       <div class="compare-chip"><small>${esc(label)}</small><code>${esc(short(known))}</code></div>
     </div>
     <p class="compare-note">${same ? 'Identical when shortened, which is how most wallets show them.' : 'Almost identical at a glance.'}</p>
-    <div class="compare-line warn"><small>${esc(enteredLabel)}</small><code>${ap}<mark>${am}</mark>${as}</code></div>
-    <div class="compare-line"><small>${esc(label)}</small><code>${bp}<mark>${bm}</mark>${bs}</code></div>
+    <div class="compare-line warn"><small>${esc(enteredLabel)}</small><code>${groupedAddress(entered, pre, entered.length - suf)}</code></div>
+    <div class="compare-line"><small>${esc(label)}</small><code>${groupedAddress(known, pre, known.length - suf)}</code></div>
   </div>`;
 }
 
@@ -105,23 +103,23 @@ export function check(s, viewer, ui, t) {
   if (c.risk === 'suspicious') {
     verdict = {
       tone: 'amber', icon: 'alert',
-      title: c.lookalike ? `This isn’t your ${like.label}` : c.typo ? `This looks like a typo of ${like.label}` : 'This address sent you a tiny payment',
+      title: c.lookalike ? `Stop. This isn’t your ${like.label}` : c.typo ? `Careful. This looks like a typo of ${like.label}` : 'Careful. This address sent you a tiny payment',
       body: c.lookalike
-        ? 'It looks the same at a glance, but the middle is different. Scammers send tiny payments from lookalike addresses so you’ll copy the wrong one.'
-        : c.typo ? 'A slip of a key can send money to an address nobody owns.' : 'Tiny “dust” payments plant an address in your history so you copy it later.',
+        ? 'It looks the same at first glance, but it’s a different address. Scammers make copycat addresses to trick people into paying them.'
+        : c.typo ? 'One wrong key can send money to an address nobody owns.' : 'Scammers send tiny amounts so their address shows up in your history, hoping you’ll copy it later.',
     };
   } else if (c.risk === 'trusted') {
-    verdict = { tone: 'green', icon: 'check', title: `${p.name} is a trusted payee`, body: 'This payment goes straight through.' };
+    verdict = { tone: 'green', icon: 'check', title: `You trust ${p.name}`, body: 'This payment goes straight through.' };
   } else if (c.risk === 'known') {
-    verdict = { tone: 'blue', icon: 'check', title: `You’ve paid ${p.name} before`, body: 'We’ll still hold it briefly, in case you change your mind.' };
+    verdict = { tone: 'blue', icon: 'check', title: `You’ve paid ${p.name} before`, body: 'Kagi still waits a few minutes before it goes, in case you change your mind.' };
   } else {
-    verdict = { tone: 'blue', icon: 'shield', title: 'New recipient', body: 'First payments are held for a few minutes, so you can undo a mistake.' };
+    verdict = { tone: 'blue', icon: 'shield', title: 'You haven’t paid this person before', body: 'Kagi waits a few minutes before first payments go, so you can take it back if something’s wrong.' };
   }
 
   const handle = c.account?.username ? `<span class="pill grey">@${esc(c.account.username)}</span>` : '';
   let buttons;
   if (c.risk === 'suspicious' && like) {
-    buttons = `<button class="btn primary" data-action="use-known" data-addr="${esc(like.of)}">Use my ${esc(like.label)}</button>
+    buttons = `<button class="btn primary" data-action="use-known" data-addr="${esc(like.of)}">Use my real ${esc(like.label)}</button>
       <button class="btn secondary" data-action="send-anyway">Send anyway</button>`;
   } else if (c.risk === 'suspicious') {
     buttons = `<button class="btn primary" data-action="go" data-to="home">Don’t send</button>
@@ -141,7 +139,7 @@ export function check(s, viewer, ui, t) {
     ${like ? compare(d.address, like.of, like.label) : `
       <div class="card pad recipient-card">
         <div class="recipient-head">${avatar(p)}<div><strong>${personName(p)}</strong>${handle}</div></div>
-        <code class="addr-full">${esc(d.address)}</code>
+        <code class="addr-full">${groupedAddress(d.address)}</code>
       </div>`}
 
     <ul class="checks card">
@@ -167,18 +165,21 @@ export function amount(s, viewer, ui, t) {
   const balance = s.accounts[viewer].balance;
   const lamports = toLamports(d.amount);
   const over = lamports > balance;
-  const hold = d.hold || c.recommendedHold;
+  const size = amountCheck(s, viewer, lamports);
+  const suggested = suggestedHold(c, size);
+  const hold = d.hold || suggested;
   const options = HOLDS.filter((h) => h.key !== 'none' || c.trusted);
   const riskPill = {
     trusted: `<span class="pill green">${icon('zap', 12)} Trusted</span>`,
     known: `<span class="pill blue">Paid before</span>`,
-    new: `<span class="pill blue">New recipient</span>`,
-    suspicious: `<span class="pill amber">${icon('alert', 12)} Flagged</span>`,
+    new: `<span class="pill blue">First payment</span>`,
+    suspicious: `<span class="pill amber">${icon('alert', 12)} Warning</span>`,
   }[c.risk];
+  const fiat = usd((lamports / LAMPORTS_PER_SOL) * ASSETS.SOL.price);
 
   const explain = hold === 'none'
-    ? `${esc(p.name)} gets it straight away. Instant payments can’t be undone.`
-    : `${esc(p.name)} can collect it after <strong>${span(holdMs(s, hold))}</strong>. Until then you can undo it. If nobody collects it within ${span(expiryMs(s))}, it comes back to you automatically.`;
+    ? `${esc(p.name)} gets it straight away. You can’t take back an instant payment.`
+    : `${esc(p.name)} can collect it after <strong>${span(holdMs(s, hold))}</strong>. Until then, you can take it back. If nobody collects it within ${span(expiryMs(s))}, it comes back to you.`;
 
   const keys = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '.', '0', 'back'];
 
@@ -191,12 +192,20 @@ export function amount(s, viewer, ui, t) {
 
     <div class="amount-block">
       <div class="amount-display tabular" aria-live="polite">${displayAmount(d.amount)}</div>
-      <div class="amount-sub ${over ? 'bad' : ''}">${over ? `More than your balance of ${money(balance)}` : `Balance ${money(balance)}`}</div>
+      <div class="amount-sub ${over ? 'bad' : ''}">${over ? `That’s more than you have (${money(balance)})` : `About ${fiat} · you have ${money(balance)}`}</div>
     </div>
 
+    ${size.flagged && !over ? `<div class="alert amount-alert" role="status">
+      <span class="alert-icon">${icon('alert', 20)}</span>
+      <div class="alert-body">
+        <strong>${size.unusual ? 'That’s a lot more than you usually send' : 'That’s more than half of your money'}</strong>
+        <p>${size.unusual ? `You usually send about ${money(size.typical)}, and your biggest payment was ${money(size.largest)}. ` : ''}If someone is rushing you to pay, stop and talk to someone you trust first. Kagi will wait at least an hour before it goes.</p>
+      </div>
+    </div>` : ''}
+
     <div class="card pad hold-card">
-      <div class="hold-head">${icon('undo', 18)}<strong>Undo window</strong>${hold === c.recommendedHold ? '<span class="pill grey">Recommended</span>' : ''}</div>
-      <div class="chips" role="group" aria-label="Undo window">
+      <div class="hold-head">${icon('undo', 20)}<strong>Time to change your mind</strong>${hold === suggested ? '<span class="pill grey">Suggested</span>' : ''}</div>
+      <div class="chips" role="group" aria-label="Time to change your mind">
         ${options.map((h) => `<button class="chip" data-action="hold" data-k="${h.key}" aria-pressed="${h.key === hold}">${esc(h.label)}</button>`).join('')}
       </div>
       <p class="hold-explain">${explain}</p>

@@ -33,7 +33,7 @@ export function renderRoute(route, { s, viewer, t, ui }) {
     case 'holdings':
       return holdings(s, viewer);
     default:
-      return home(s, viewer, t);
+      return home(s, viewer, t, ui);
   }
 }
 

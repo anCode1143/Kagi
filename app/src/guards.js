@@ -103,25 +103,25 @@ export function analyze(s, viewer, address, t) {
 
   const checks = [];
   if (account?.username) {
-    checks.push({ status: 'ok', title: `Verified Kagi user @${account.username}`, detail: account.name });
+    checks.push({ status: 'ok', title: `This is really @${account.username}`, detail: `${account.name}, on Kagi` });
   }
   checks.push(paid.length
-    ? { status: 'ok', title: `You’ve paid ${contact?.name || 'this address'} ${paid.length === 1 ? 'once' : `${paid.length} times`}`, detail: `Last payment ${when(lastPaidAt, t)}` }
-    : { status: 'warn', title: 'You’ve never sent money here', detail: 'First payments are held for a few minutes, so you can undo a mistake.' });
+    ? { status: 'ok', title: `You’ve paid ${contact?.name || 'this address'} ${paid.length === 1 ? 'once' : `${paid.length} times`}`, detail: `Last time: ${when(lastPaidAt, t)}` }
+    : { status: 'warn', title: 'You’ve never paid this address', detail: 'Kagi waits a few minutes before first payments go, so you can take it back.' });
   if (lookalike) {
-    checks.push({ status: 'danger', title: `Looks like ${lookalike.label}, but isn’t`, detail: `Only the first ${lookalike.prefix} and last ${lookalike.suffix} characters match. This is how address-poisoning scams work.` });
+    checks.push({ status: 'danger', title: `Pretends to be ${lookalike.label}`, detail: `Only the first ${lookalike.prefix} and last ${lookalike.suffix} characters match. It’s a copycat.` });
   } else if (typo) {
-    checks.push({ status: 'danger', title: `One slip away from ${typo.label}`, detail: `${typo.distance === 1 ? 'Just 1 character is' : `${typo.distance} characters are`} different. Did you mistype it?` });
+    checks.push({ status: 'danger', title: `Almost the same as ${typo.label}`, detail: `${typo.distance === 1 ? 'Just 1 character is' : `${typo.distance} characters are`} different. Was it a typing mistake?` });
   } else {
-    checks.push({ status: 'ok', title: 'Doesn’t imitate anyone you know', detail: 'Compared with your contacts and past payments.' });
+    checks.push({ status: 'ok', title: 'Doesn’t copy anyone you know', detail: 'Kagi compared it with your contacts and past payments.' });
   }
   if (dust) {
-    checks.push({ status: 'danger', title: `It sent you ${money(dust.amount)} ${when(dust.at, t).toLowerCase().startsWith('today') ? 'today' : 'recently'}`, detail: 'Tiny “dust” payments plant an address in your history so you copy it later.' });
+    checks.push({ status: 'danger', title: `It sent you a tiny payment ${when(dust.at, t).toLowerCase().startsWith('today') ? 'today' : 'recently'}`, detail: `Just ${money(dust.amount)}. Scammers do this so their address shows up in your history.` });
   }
   if (trusted) {
-    checks.push({ status: 'ok', title: 'Trusted payee', detail: 'Goes straight through, no hold.' });
+    checks.push({ status: 'ok', title: 'Someone you trust', detail: 'Goes straight through, with no waiting.' });
   } else {
-    checks.push({ status: 'info', title: 'Comes back if nobody collects it', detail: 'Mistyped or dead address? The money returns to you after 7 days.' });
+    checks.push({ status: 'info', title: 'Comes back if nobody collects it', detail: 'Typed it wrong? If nobody collects it in 7 days, you get it back.' });
   }
 
   let risk = 'new';
@@ -133,6 +133,24 @@ export function analyze(s, viewer, address, t) {
   const flags = [lookalike && 'lookalike', typo && 'typo', dust && 'dust', !paid.length && 'new'].filter(Boolean);
 
   return { address, account, contact, paidCount: paid.length, lastPaidAt, trusted, lookalike, typo, dust, checks, risk, recommendedHold, flags };
+}
+
+// Is this amount unusual for you? Big, out-of-pattern payments are what scammers rush people into.
+export function amountCheck(s, viewer, lamports) {
+  const past = s.txs.filter((tx) => tx.from === viewer && isSuccessful(tx)).map((tx) => tx.amount).sort((a, b) => a - b);
+  const balance = s.accounts[viewer]?.balance || 0;
+  const typical = past.length ? past[Math.floor(past.length / 2)] : 0;
+  const largest = past.length ? past[past.length - 1] : 0;
+  const unusual = lamports > 0 && past.length >= 3 && lamports >= Math.max(typical * 5, largest * 1.5);
+  const bigShare = lamports > 0 && balance > 0 && lamports >= balance * 0.5;
+  return { typical, largest, unusual, bigShare, flagged: unusual || bigShare };
+}
+
+// A big or unusual amount always gets at least a 1-hour hold, even for trusted people.
+const HOLD_ORDER = ['none', '10m', '1h', '24h'];
+export function suggestedHold(check, amount) {
+  if (!amount.flagged) return check.recommendedHold;
+  return HOLD_ORDER.indexOf(check.recommendedHold) >= HOLD_ORDER.indexOf('1h') ? check.recommendedHold : '1h';
 }
 
 // Incoming dust from an address that imitates one you know: surfaced as an alert on Home.

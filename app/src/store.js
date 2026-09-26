@@ -10,11 +10,32 @@ export function freshDraft() {
   return { input: '', address: null, amount: '0', memo: '', hold: null, ack: false };
 }
 
+// Small per-device preferences (e.g. whether Activity is expanded). Losing them is harmless.
+const PREFS = 'kagi:prefs';
+export function pref(key, fallback) {
+  try {
+    const saved = JSON.parse(localStorage.getItem(PREFS) || '{}');
+    return key in saved ? saved[key] : fallback;
+  } catch {
+    return fallback;
+  }
+}
+export function setPref(key, value) {
+  try {
+    const saved = JSON.parse(localStorage.getItem(PREFS) || '{}');
+    saved[key] = value;
+    localStorage.setItem(PREFS, JSON.stringify(saved));
+  } catch {
+    // Storage blocked: the preference just won't survive a reload.
+  }
+}
+
 export const ui = {
   draft: freshDraft(),
   onboard: { name: '', username: '', wallet: null, busy: false },
   contact: { name: '', to: '', ack: false },
   demoOpen: false,
+  activityOpen: pref('activityOpen', false),
 };
 
 let state = load() || seedWorld();

@@ -1,12 +1,12 @@
 // Kagi: router, actions and the one-second clock that runs holds and auto-returns.
-import { store, ui, now, me, freshDraft, resetAll } from './store.js';
+import { store, ui, now, me, freshDraft, resetAll, setPref } from './store.js';
 import { settle, send, cancel, claim, topUp, setTrusted, addContact, simulateDust, simulateIncoming, phase } from './ledger.js';
-import { resolveInput, analyze, validUsername } from './guards.js';
+import { resolveInput, analyze, validUsername, amountCheck, suggestedHold } from './guards.js';
 import { createWallet, connectWallet } from './wallet.js';
 import { randomAddress } from './base58.js';
 import { seedOwnerHistory, ADDR } from './seed.js';
 import { renderRoute, renderDemo } from './views/index.js';
-import { clock, dateTime, toLamports, SOL } from './format.js';
+import { clock, dateTime, span, toLamports, SOL } from './format.js';
 
 const app = document.getElementById('app');
 const demo = document.getElementById('demo');
@@ -58,6 +58,7 @@ function render() {
   lastPath = route.path;
   phaseSignature = signature();
   updateLive();
+  drawQrCodes();
 }
 
 function captureFocus() {
@@ -83,6 +84,10 @@ function updateLive() {
   document.querySelectorAll('[data-until]').forEach((el) => {
     el.textContent = clock(Number(el.dataset.until) - t);
   });
+  // The same countdown in words ("42 minutes left to undo"), easier to read than 42:17.
+  document.querySelectorAll('[data-words-until]').forEach((el) => {
+    el.textContent = `${span(Math.max(1000, Number(el.dataset.wordsUntil) - t))} ${el.dataset.suffix || ''}`.trim();
+  });
   document.querySelectorAll('[data-ring]').forEach((el) => {
     const from = Number(el.dataset.from);
     const to = Number(el.dataset.to);
@@ -92,6 +97,34 @@ function updateLive() {
   });
   const demoClock = document.querySelector('[data-demo-clock]');
   if (demoClock) demoClock.textContent = dateTime(t);
+}
+
+// QR codes ([data-qr]) are drawn after render with a small QR library, loaded only when needed.
+let qrLib = null;
+async function drawQrCodes() {
+  const targets = [...document.querySelectorAll('[data-qr]:not([data-drawn])')];
+  if (!targets.length) return;
+  try {
+    qrLib ||= (await import('https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/+esm')).default;
+  } catch {
+    targets.forEach((el) => {
+      el.dataset.drawn = 'failed';
+      el.textContent = 'The QR code needs an internet connection.';
+    });
+    return;
+  }
+  for (const el of targets) {
+    const qr = qrLib(0, 'M');
+    qr.addData(el.dataset.qr);
+    qr.make();
+    const n = qr.getModuleCount();
+    let path = '';
+    for (let r = 0; r < n; r++) {
+      for (let c = 0; c < n; c++) if (qr.isDark(r, c)) path += `M${c} ${r}h1v1h-1z`;
+    }
+    el.innerHTML = `<svg viewBox="-3 -3 ${n + 6} ${n + 6}" shape-rendering="crispEdges" aria-hidden="true"><rect x="-3" y="-3" width="${n + 6}" height="${n + 6}" fill="#FFFFFF"/><path d="${path}" fill="#0B1220"/></svg>`;
+    el.dataset.drawn = 'yes';
+  }
 }
 
 // Changes whenever a hold crosses a deadline, so the screen re-renders at that moment.
@@ -184,6 +217,11 @@ const actions = {
     store.update((s) => topUp(s, me(), SOL(1)));
     toast('Added 1 SOL of demo money');
   },
+  'toggle-activity': () => {
+    ui.activityOpen = !ui.activityOpen;
+    setPref('activityOpen', ui.activityOpen);
+    render();
+  },
   dismiss: (d) => {
     store.update((s) => {
       (s.dismissed[me()] ||= []).push(d.id);
@@ -240,9 +278,12 @@ const actions = {
     const d = ui.draft;
     const viewer = me();
     const check = analyze(store.get(), viewer, d.address, now());
+    const amount = toLamports(d.amount);
+    const size = amountCheck(store.get(), viewer, amount);
+    const flags = size.flagged ? [...check.flags, 'unusual-amount'] : check.flags;
     let tx;
     store.update((s) => {
-      tx = send(s, { from: viewer, to: d.address, amount: toLamports(d.amount), memo: d.memo.trim(), hold: d.hold || check.recommendedHold, flags: check.flags });
+      tx = send(s, { from: viewer, to: d.address, amount, memo: d.memo.trim(), hold: d.hold || suggestedHold(check, size), flags });
     });
     ui.draft = freshDraft();
     go(`tx/${tx.id}`);

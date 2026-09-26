@@ -2,7 +2,7 @@
 import { esc, when, initials, short } from '../format.js';
 import { icon } from '../icons.js';
 import { resolveInput, analyze } from '../guards.js';
-import { bar, tabbar, who, avatar } from './shell.js';
+import { bar, tabbar, who, avatar, groupedAddress } from './shell.js';
 
 export function contacts(s, viewer, ui, t) {
   const list = (s.contacts[viewer] || []).slice().sort((a, b) => (b.trusted - a.trusted) || a.name.localeCompare(b.name));
@@ -92,9 +92,14 @@ export function receive(s, viewer) {
       <button class="handle-btn" data-action="copy" data-text="@${esc(account.username)}">@${esc(account.username)} ${icon('copy', 16)}</button>
       <p class="muted">Anyone on Kagi can pay you with your username. No address to copy, nothing to mistype.</p>
     </div>
+    <div class="section-title"><span>Show this code</span></div>
+    <div class="card qr-card">
+      <div class="qr" data-qr="solana:${esc(viewer)}?label=${esc(encodeURIComponent(`@${account.username}`))}" role="img" aria-label="QR code with your wallet address"></div>
+      <p class="muted">Someone can scan this with any Solana wallet app to pay you, so nobody has to type your address.</p>
+    </div>
     <div class="section-title"><span>Your address</span></div>
     <div class="card pad">
-      <code class="addr-full">${esc(viewer)}</code>
+      <code class="addr-full">${groupedAddress(viewer)}</code>
       <button class="btn secondary gap-16" data-action="copy" data-text="${esc(viewer)}">${icon('copy', 18)} Copy address</button>
     </div>
     <p class="fine gap-16">For other wallets and exchanges. ${source}</p>

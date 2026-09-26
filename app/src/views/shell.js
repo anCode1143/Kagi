@@ -18,7 +18,7 @@ const TABS = [
 
 export function tabbar(active) {
   return `<nav class="tabbar" aria-label="Main">${TABS.map(([to, label, ic]) =>
-    `<button class="tab" data-action="go" data-to="${to}" ${active === to ? 'aria-current="page"' : ''}>${icon(ic, 22)}${label}</button>`).join('')}</nav>`;
+    `<button class="tab" data-action="go" data-to="${to}" ${active === to ? 'aria-current="page"' : ''}>${icon(ic, 26)}${label}</button>`).join('')}</nav>`;
 }
 
 // How an address appears to the person viewing: contact name, @username, label, or a short address.
@@ -38,6 +38,21 @@ export function avatar(person, size = '') {
   if (person.kind === 'unknown') return `<span class="avatar ${size}">${icon('wallet', 18)}</span>`;
   const shape = person.kind === 'org' ? 'dark square' : '';
   return `<span class="avatar ${shape} ${size}">${esc(initials(person.name))}</span>`;
+}
+
+// An address in blocks of four, like a bank IBAN, so it wraps cleanly and is easier to read aloud.
+// Characters with index in [from, to) are highlighted.
+export function groupedAddress(address, from = -1, to = -1) {
+  let html = '';
+  for (let i = 0; i < address.length; i += 4) {
+    let block = '';
+    for (let k = i; k < Math.min(i + 4, address.length); k++) {
+      const ch = esc(address[k]);
+      block += k >= from && k < to ? `<mark>${ch}</mark>` : ch;
+    }
+    html += `<span class="addr-block">${block.replace(/<\/mark><mark>/g, '')}</span>`;
+  }
+  return html;
 }
 
 export function personName(person) {

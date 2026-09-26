@@ -75,6 +75,8 @@ Then open <http://127.0.0.1:5173>. Create a wallet, pick a @username, and use th
 
 Add `?profile=anything` to the URL to keep a separate demo, e.g. two browser windows side by side. Balances and payments are simulated in the browser for now. [`app/src/ledger.js`](app/src/ledger.js) stands in for the Solana escrow program, and [`app/src/guards.js`](app/src/guards.js) holds the safety checks.
 
+The escrow program itself is in [`program/`](program), with steps to deploy it to devnet from Solana Playground. The app isn't connected to it yet.
+
 ## What's next
 
 - **Scam recall.** Partner with exchanges and fraud-intelligence services, so that a payment flagged as a scam during its hold window can be stopped before anyone collects it.

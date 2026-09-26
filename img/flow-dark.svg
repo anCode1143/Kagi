@@ -13,26 +13,26 @@
       <g fill="none" stroke="#B45309" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M38 80L28.5 98h19z"/><path d="M38 86.5v5"/><path d="M38 94.8v.01"/>
       </g>
-      <text x="16" y="141" font-size="19" font-weight="700" letter-spacing="-0.3" fill="#0B1220">This isn't your</text>
+      <text x="16" y="141" font-size="19" font-weight="700" letter-spacing="-0.3" fill="#0B1220">Stop. This isn't your</text>
       <text x="16" y="164" font-size="19" font-weight="700" letter-spacing="-0.3" fill="#0B1220">Exchange deposit</text>
-      <text x="16" y="185" font-size="11.5" fill="#5A6478">Same at a glance. The middle is different.</text>
+      <text x="16" y="185" font-size="11.5" fill="#5A6478">Looks the same, but it's a copycat.</text>
       <rect x="12" y="198" width="236" height="164" rx="12" fill="#FFFFFF" stroke="#E3E6EC"/>
       <rect x="24" y="210" width="92" height="42" rx="9" fill="#FDF1E2"/>
       <rect x="144" y="210" width="92" height="42" rx="9" fill="#F6F7F9"/>
       <g font-family="'Geist Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">
-        <text x="32" y="225" font-size="8" letter-spacing="0.8" fill="#7A3606">YOU ENTERED</text>
+        <text x="32" y="225" font-family="Geist, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="9.5" font-weight="600" fill="#7A3606">You entered</text>
         <text x="32" y="243" font-size="12" fill="#0B1220">7xKp…3fQa</text>
-        <text x="152" y="225" font-size="8" letter-spacing="0.8" fill="#5A6478">EXCHANGE</text>
+        <text x="152" y="225" font-family="Geist, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="9.5" font-weight="600" fill="#5A6478">Exchange deposit</text>
         <text x="152" y="243" font-size="12" fill="#0B1220">7xKp…3fQa</text>
-        <text x="24" y="283" font-size="8" letter-spacing="0.8" fill="#7A3606">FULL ADDRESS YOU ENTERED</text>
-        <text x="24" y="300" font-size="11.5" fill="#0B1220">7xKpQ<tspan fill="#B45309" font-weight="600">9eHw1RcZ5nTbF2mJ</tspan></text>
-        <text x="24" y="316" font-size="11.5" fill="#0B1220"><tspan fill="#B45309" font-weight="600">k8LsP4yVd6UhBgCrZ</tspan>3fQa</text>
+        <text x="24" y="283" font-family="Geist, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="9.5" font-weight="600" fill="#7A3606">Full address you entered</text>
+        <text x="24" y="300" font-size="11.5" fill="#0B1220">7xKp Q<tspan fill="#B45309" font-weight="600">9eH w1Rc Z5nT bF2m Jk8L</tspan></text>
+        <text x="24" y="316" font-size="11.5" fill="#0B1220"><tspan fill="#B45309" font-weight="600">sP4y Vd6U hBgC rZ</tspan>3f Qa</text>
       </g>
       <text x="130" y="236" font-size="15" font-weight="700" fill="#5A6478" text-anchor="middle">=</text>
       <line x1="24" y1="264" x2="236" y2="264" stroke="#E3E6EC"/>
       <text x="24" y="344" font-size="10.5" font-weight="600" fill="#0B1220">Only the first 5 and last 4 characters match.</text>
       <rect x="12" y="384" width="236" height="42" rx="11" fill="#1A56DB"/>
-      <text x="130" y="409.5" font-size="13" font-weight="700" fill="#FFFFFF" text-anchor="middle">Use my Exchange deposit</text>
+      <text x="130" y="409.5" font-size="13" font-weight="700" fill="#FFFFFF" text-anchor="middle">Use my real Exchange deposit</text>
       <rect x="12.5" y="434.5" width="235" height="41" rx="11" fill="#FFFFFF" stroke="#D3D8E0"/>
       <text x="130" y="459.5" font-size="13" font-weight="600" fill="#0B1220" text-anchor="middle">Send anyway</text>
     </g>
@@ -44,21 +44,21 @@
       <path d="M37 27l-7 7 7 7" fill="none" stroke="#0B1220" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
       <text x="136" y="31" font-family="'Geist Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="12" fill="#0B1220" text-anchor="middle">7xKp…3fQa</text>
       <rect x="110" y="38" width="52" height="15" rx="4" fill="#FDF1E2"/>
-      <text x="136" y="49" font-size="9" font-weight="700" fill="#7A3606" text-anchor="middle">Flagged</text>
+      <text x="136" y="49" font-size="9" font-weight="700" fill="#7A3606" text-anchor="middle">Warning</text>
       <text x="130" y="120" font-size="48" font-weight="700" letter-spacing="-1.5" fill="#0B1220" text-anchor="middle">3<tspan dx="8" font-size="17" font-weight="600" letter-spacing="0" fill="#5A6478">SOL</tspan></text>
-      <text x="130" y="142" font-size="11" fill="#5A6478" text-anchor="middle">Balance 12.84 SOL</text>
+      <text x="130" y="142" font-size="11" fill="#5A6478" text-anchor="middle">About $450 · you have 12.84 SOL</text>
       <rect x="12" y="160" width="236" height="112" rx="12" fill="#FFFFFF" stroke="#E3E6EC"/>
-      <text x="24" y="183" font-size="12.5" font-weight="600" fill="#0B1220">Undo window</text>
-      <rect x="164" y="171" width="72" height="16" rx="4" fill="#EEF0F4"/>
-      <text x="200" y="182.5" font-size="9" font-weight="600" fill="#2A3345" text-anchor="middle">Recommended</text>
+      <text x="24" y="183" font-size="12.5" font-weight="600" fill="#0B1220">Time to change your mind</text>
+      <rect x="184" y="171" width="52" height="16" rx="4" fill="#EEF0F4"/>
+      <text x="210" y="182.5" font-size="9" font-weight="600" fill="#2A3345" text-anchor="middle">Suggested</text>
       <rect x="24" y="194" width="66" height="32" rx="8" fill="#EEF0F4"/>
       <text x="57" y="214" font-size="11" font-weight="600" fill="#0B1220" text-anchor="middle">10 min</text>
       <rect x="97" y="194" width="66" height="32" rx="8" fill="#1A56DB"/>
       <text x="130" y="214" font-size="11" font-weight="600" fill="#FFFFFF" text-anchor="middle">1 hour</text>
       <rect x="170" y="194" width="66" height="32" rx="8" fill="#EEF0F4"/>
       <text x="203" y="214" font-size="11" font-weight="600" fill="#0B1220" text-anchor="middle">24 hours</text>
-      <text x="24" y="247" font-size="10.5" fill="#5A6478">They can collect after 1 hour.</text>
-      <text x="24" y="262" font-size="10.5" fill="#5A6478">Until then, you can undo it.</text>
+      <text x="24" y="247" font-size="10.5" fill="#5A6478">They can collect it after 1 hour.</text>
+      <text x="24" y="262" font-size="10.5" fill="#5A6478">Until then, you can take it back.</text>
       <g font-size="18" font-weight="500" fill="#0B1220" text-anchor="middle">
         <text x="57" y="312">1</text><text x="130" y="312">2</text><text x="203" y="312">3</text>
         <text x="57" y="346">4</text><text x="130" y="346">5</text><text x="203" y="346">6</text>
@@ -81,7 +81,7 @@
       <circle cx="130" cy="150" r="60" fill="none" stroke="#262E3D" stroke-width="9"/>
       <circle cx="130" cy="150" r="60" fill="none" stroke="#7AA5FF" stroke-width="9" stroke-linecap="round" stroke-dasharray="376.99" stroke-dashoffset="111.2" transform="rotate(-90 130 150)"/>
       <text x="130" y="157" font-family="'Geist Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="26" font-weight="500" fill="#FFFFFF" text-anchor="middle">42:17</text>
-      <text x="130" y="175" font-size="10" fill="#98A2B5" text-anchor="middle">left to undo</text>
+      <text x="130" y="174" font-size="10" fill="#98A2B5" text-anchor="middle">42 minutes</text><text x="130" y="186" font-size="10" fill="#98A2B5" text-anchor="middle">left to undo</text>
       <text x="130" y="248" font-size="24" font-weight="700" fill="#FFFFFF" text-anchor="middle">3<tspan dx="5" font-size="13" font-weight="600" fill="#98A2B5">SOL</tspan></text>
       <text x="130" y="266" font-size="11" fill="#98A2B5" text-anchor="middle">to <tspan font-family="'Geist Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" fill="#FFFFFF">7xKp…3fQa</tspan></text>
       <rect x="12" y="284" width="236" height="124" rx="12" fill="#151B27" stroke="#262E3D"/>
@@ -94,7 +94,7 @@
       <circle cx="31" cy="360" r="5.5" fill="none" stroke="#3A4356" stroke-width="2"/>
       <circle cx="31" cy="386" r="5.5" fill="none" stroke="#3A4356" stroke-width="2"/>
       <text x="46" y="312" font-size="11.5" font-weight="600" fill="#FFFFFF">Sent into a hold</text>
-      <text x="46" y="338" font-size="11.5" font-weight="600" fill="#FFFFFF">You can undo <tspan font-weight="400" fill="#98A2B5">· until 14:32</tspan></text>
+      <text x="46" y="338" font-size="11.5" font-weight="600" fill="#FFFFFF">You can take it back <tspan font-weight="400" fill="#98A2B5">· until 14:32</tspan></text>
       <text x="46" y="364" font-size="11.5" font-weight="600" fill="#D5DBE5">They collect it <tspan font-weight="400" fill="#98A2B5">· after 14:32</tspan></text>
       <text x="46" y="390" font-size="11.5" font-weight="600" fill="#D5DBE5">Or it comes back <tspan font-weight="400" fill="#98A2B5">· by 3 Oct</tspan></text>
       <rect x="12" y="430" width="236" height="46" rx="11" fill="#FFFFFF"/>
@@ -139,20 +139,20 @@
         <text x="66" y="600">01</text><text x="362" y="600">02</text><text x="658" y="600">03</text><text x="954" y="600">04</text>
       </g>
       <g font-size="16" font-weight="700" fill="#E6EBF3">
-        <text x="66" y="624">Kagi checks the address</text>
-        <text x="362" y="624">You pick a hold</text>
-        <text x="658" y="624">You can still undo</text>
+        <text x="66" y="624">Kagi spots the copycat</text>
+        <text x="362" y="624">You choose a waiting time</text>
+        <text x="658" y="624">You can still take it back</text>
         <text x="954" y="624">The money's back</text>
       </g>
-      <text x="66" y="648">It looks like your exchange's.</text>
-      <text x="66" y="666">Only the first 5 and last 4</text>
-      <text x="66" y="684">characters match.</text>
-      <text x="362" y="648">New payees wait before they can</text>
-      <text x="362" y="666">collect. Trusted ones skip this.</text>
+      <text x="66" y="648">It looks like your exchange's</text>
+      <text x="66" y="666">address, but only the first 5 and</text>
+      <text x="66" y="684">last 4 characters match.</text>
+      <text x="362" y="648">New people wait before they can</text>
+      <text x="362" y="666">collect it. People you trust don't.</text>
       <text x="658" y="648">Until the timer runs out, one</text>
       <text x="658" y="666">tap cancels the payment.</text>
       <text x="954" y="648">Nothing lost. If nobody collects</text>
-      <text x="954" y="666">in 7 days, it returns by itself.</text>
+      <text x="954" y="666">it in 7 days, it comes back.</text>
     </g>
   </g>
 </svg>

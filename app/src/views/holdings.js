@@ -17,20 +17,19 @@ export function legend(parts) {
     <li><span class="swatch" style="background: ${p.color}"></span>${esc(p.label)} <span class="muted">${percent(p.share)}</span></li>`).join('')}</ul>`;
 }
 
-// Compact card for Home.
+// One plain row on Home; the breakdown lives on the Holdings screen.
 export function holdingsCard(account) {
   const rows = holdingsFor(account);
-  const parts = segments(rows);
   const total = rows.reduce((sum, r) => sum + r.value, 0);
-  return `<section class="panel holdings-card">
-    <div class="panel-head">
-      <span class="label-mono">Holdings</span>
-      <button class="text-btn" data-action="go" data-to="holdings">See all</button>
-    </div>
-    <div class="holdings-total"><strong class="tabular">${usd(total)}</strong><span class="muted">${rows.length} tokens · demo prices</span></div>
-    ${stackBar(parts)}
-    ${legend(parts)}
-  </section>`;
+  const names = rows.slice(0, 3).map((r) => r.symbol).join(', ');
+  const more = rows.length > 3 ? ` and ${rows.length - 3} more` : '';
+  return `<button class="panel holdings-row" data-action="go" data-to="holdings">
+    <span class="row-text">
+      <span class="row-title">All your crypto</span>
+      <span class="row-sub">About <span class="tabular">${usd(total)}</span> in ${esc(names)}${more}</span>
+    </span>
+    <span class="see-all">See all ${icon('chevron', 18)}</span>
+  </button>`;
 }
 
 export function holdings(s, viewer) {
@@ -43,12 +42,12 @@ export function holdings(s, viewer) {
     <section class="hero">
       <div class="label-mono">Total value</div>
       <div class="hero-figure tabular">${usd(total)}</div>
-      <div class="hero-sub">${rows.length} tokens · values use demo prices</div>
+      <div class="hero-sub">${rows.length} coins · worked out with demo prices</div>
     </section>
     ${stackBar(parts, 'lg')}
     ${legend(parts)}
 
-    <div class="section-title"><span>Tokens</span></div>
+    <div class="section-title"><span>Your coins</span></div>
     <div class="card list">
       ${rows.map((r) => `<div class="row asset-row">
         <span class="token" aria-hidden="true"><span class="swatch" style="background: ${r.color}"></span>${esc(r.symbol.slice(0, 4))}</span>
@@ -65,7 +64,7 @@ export function holdings(s, viewer) {
 
     <div class="alert blue gap-16">
       <span class="alert-icon">${icon('shield', 18)}</span>
-      <div class="alert-body"><strong>Protection covers SOL payments</strong><p>Other tokens are shown so you can see everything in one place. Prices here are fixed demo values, not live market data.</p></div>
+      <div class="alert-body"><strong>Kagi protects your SOL payments</strong><p>Your other coins are shown so you can see everything in one place. Prices here are demo values, not live prices.</p></div>
     </div>
   </div>
   ${tabbar('home')}`;

@@ -1,31 +1,40 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="440" viewBox="0 0 1280 440" role="img" aria-label="Kagi (カギ). A safety net for crypto payments.">
   <rect width="1280" height="440" fill="#F7F9FC"/>
 
-  <text x="1216" y="72" text-anchor="end" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13" letter-spacing="2" fill="#5A6478">BUILD IRL · DUBLIN · 2026</text>
+  <text x="1216" y="56" text-anchor="end" font-family="'Geist Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13" letter-spacing="2" fill="#5A6478">BUILD IRL · DUBLIN · 2026</text>
 
-  <text x="60" y="152" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="116" font-weight="800" letter-spacing="-4" fill="#0B1220">kagi<tspan dx="28" font-family="'Hiragino Sans', 'Yu Gothic UI', 'Yu Gothic', Meiryo, 'Noto Sans JP', sans-serif" font-size="46" font-weight="700" letter-spacing="2" fill="#1A56DB">カギ</tspan></text>
-  <text x="66" y="200" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="26" fill="#5A6478">A safety net for crypto payments.</text>
+  <text x="60" y="150" font-family="Geist, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="116" font-weight="800" letter-spacing="-4" fill="#0B1220">kagi<tspan dx="28" font-family="'Hiragino Sans', 'Yu Gothic UI', 'Yu Gothic', Meiryo, 'Noto Sans JP', sans-serif" font-size="46" font-weight="700" letter-spacing="2" fill="#1A56DB">カギ</tspan></text>
+  <text x="66" y="198" font-family="Geist, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="26" fill="#5A6478">A safety net for crypto payments.</text>
 
-  <g transform="translate(1030 84) scale(7)" fill="none" stroke="#1A56DB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Key in a rounded-square tile, like the app's icon tiles -->
+  <rect x="1076" y="76" width="140" height="140" rx="38" fill="#EAF0FD"/>
+  <g transform="translate(1086 88.5) scale(5)" fill="none" stroke="#1A56DB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
     <circle cx="7.5" cy="15.5" r="5.5"/>
     <path d="M21 2l-9.6 9.6"/>
     <path d="M15.5 7.5l3 3L22 7l-3-3"/>
   </g>
 
-  <line x1="64" y1="252" x2="1216" y2="252" stroke="#DCE2EC" stroke-width="1.5"/>
+  <!-- The comparison, in an app-style panel -->
+  <rect x="64.5" y="244.5" width="1151" height="152" rx="18" fill="#FFFFFF" stroke="#E3E6EC"/>
 
-  <g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">
-    <text x="64" y="310" font-size="13" letter-spacing="2" fill="#5A6478">SAVED</text>
-    <text x="180" y="312" font-size="26" fill="#0B1220">7xKpQ4mRb9TzW2vLcN8hYd3JfS6aE1uGq5VnXo3fQa</text>
-    <text x="64" y="362" font-size="13" letter-spacing="2" fill="#5A6478">PASTED</text>
-    <text x="180" y="364" font-size="26" fill="#0B1220">7xKpQ<tspan fill="#1A56DB">9eHw1RcZ5nTbF2mJk8LsP4yVd6UhBgCrZ</tspan>3fQa</text>
+  <g font-family="Geist, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="15" font-weight="600" text-anchor="middle">
+    <rect x="90" y="282" width="72" height="28" rx="7" fill="#EEF0F4"/>
+    <text x="126" y="301" fill="#2A3345">Saved</text>
+    <rect x="90" y="334" width="72" height="28" rx="7" fill="#FDF1E2"/>
+    <text x="126" y="353" fill="#7A3606">Pasted</text>
   </g>
 
-  <g text-anchor="end">
-    <text x="1216" y="306" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="18" fill="#5A6478">Your wallet shows both as</text>
-    <text x="1216" y="338" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="22" fill="#0B1220">7xKp…3fQa</text>
-    <text x="1216" y="370" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="18" font-weight="700" fill="#0B1220">Kagi notices.</text>
+  <g font-family="'Geist Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="24" fill="#0B1220">
+    <text x="186" y="304">7xKp Q4mR b9Tz W2vL cN8h Yd3J fS6a E1uG q5Vn Xo3f Qa</text>
+    <text x="186" y="356">7xKp Q<tspan fill="#B45309" font-weight="600">9eH w1Rc Z5nT bF2m Jk8L sP4y Vd6U hBgC rZ</tspan>3f Qa</text>
   </g>
 
-  <text x="64" y="410" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13" letter-spacing="2" fill="#5A6478">KAGI <tspan font-family="'Hiragino Sans', 'Yu Gothic UI', 'Yu Gothic', Meiryo, 'Noto Sans JP', sans-serif" letter-spacing="1">(カギ)</tspan> · JAPANESE FOR KEY</text>
+  <g font-family="Geist, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" text-anchor="end">
+    <text x="1190" y="290" font-size="17" fill="#5A6478">Your wallet shows both as</text>
+    <rect x="1066" y="303" width="124" height="36" rx="9" fill="#F6F7F9"/>
+    <text x="1128" y="327" font-family="'Geist Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="17" fill="#0B1220" text-anchor="middle">7xKp…3fQa</text>
+    <text x="1190" y="374" font-size="18" font-weight="700" fill="#0B1220">Kagi notices.</text>
+  </g>
+
+  <text x="64" y="426" font-family="'Geist Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="13" letter-spacing="2" fill="#5A6478">KAGI <tspan font-family="'Hiragino Sans', 'Yu Gothic UI', 'Yu Gothic', Meiryo, 'Noto Sans JP', sans-serif" letter-spacing="1">(カギ)</tspan> · JAPANESE FOR KEY</text>
 </svg>
