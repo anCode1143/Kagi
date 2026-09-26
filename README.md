@@ -44,7 +44,7 @@ It looks and feels like a banking app. The safety net underneath runs on Solana.
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="img/flow-dark.svg">
-  <img alt="Four phone screens. 1: Kagi flags that a pasted address only looks like your saved exchange address. 2: you choose a 1 hour hold and send €300. 3: the payment is on hold, with a countdown and an Undo payment button. 4: €300 is back in your account." src="img/flow-light.svg" width="100%">
+  <img alt="Four phone screens. 1: Kagi flags that a pasted address only looks like your saved exchange address. 2: you choose a 1 hour hold and send 3 SOL. 3: the payment is on hold, with a countdown and an Undo payment button. 4: 3 SOL is back in your wallet." src="img/flow-light.svg" width="100%">
 </picture>
 
 Under the hood, a protected payment doesn't go straight to the recipient. It goes into a hold enforced by a Solana program:
@@ -58,6 +58,22 @@ Under the hood, a protected payment doesn't go straight to the recipient. It goe
 - **Code enforces the hold, not a company.** Kagi never has custody of your money, and nobody can move it outside the program's rules, including us.
 - **Fees cost a fraction of a cent,** so an extra step per payment costs almost nothing.
 - **Every hold, cancel and return can be checked by anyone** on the Solana Explorer.
+
+## Run the app
+
+The web app lives in [`app/`](app). It has no build step and nothing to install, just Python to serve the files:
+
+```bash
+python -m http.server 5173 --directory app
+```
+
+Then open <http://127.0.0.1:5173>. Create a wallet, pick a @username, and use the **Demo controls** panel to:
+
+- switch between people (you, @aoife, @padraig, @ciaran) to see both sides of a payment
+- trigger a dusting attack from a lookalike address
+- fast-forward time, or turn on **short timers** so holds and auto-returns happen in seconds during a live pitch
+
+Add `?profile=anything` to the URL to keep a separate demo, e.g. two browser windows side by side. Balances and payments are simulated in the browser for now. [`app/src/ledger.js`](app/src/ledger.js) stands in for the Solana escrow program, and [`app/src/guards.js`](app/src/guards.js) holds the safety checks.
 
 ## What's next
 
