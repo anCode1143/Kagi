@@ -1,0 +1,162 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" role="img" aria-label="Four phone screens. 1: Kagi flags that a pasted address only looks like your saved exchange address. 2: you choose a 1 hour hold and send 300 euro. 3: the payment is on hold with a countdown and an Undo payment button. 4: 300 euro is back in your account.">
+  <rect width="1280" height="720" fill="#0B0F17"/>
+
+  <g font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif">
+
+    <!-- Phone 1: lookalike caught -->
+    <rect x="64" y="40" width="260" height="520" rx="36" fill="#2E3748"/>
+    <g transform="translate(71 47)">
+      <rect width="246" height="506" rx="30" fill="#F3F5F9"/>
+      <circle cx="32" cy="36" r="16" fill="#E4E8EF"/>
+      <path d="M35 29l-7 7 7 7" fill="none" stroke="#0B1220" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="58" y="41" font-size="14" font-weight="700" fill="#0B1220">Check address</text>
+      <circle cx="36" cy="86" r="20" fill="#FDEBD3"/>
+      <g fill="none" stroke="#B45309" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M36 76L26.5 94h19z"/><path d="M36 82.5v5"/><path d="M36 90.8v.01"/>
+      </g>
+      <text x="16" y="132" font-size="19" font-weight="800" fill="#0B1220">This isn't your</text>
+      <text x="16" y="154" font-size="19" font-weight="800" fill="#0B1220">exchange address</text>
+      <text x="16" y="176" font-size="12" fill="#5A6478">Shortened, it looks identical.</text>
+      <text x="16" y="192" font-size="12" fill="#5A6478">The middle is different.</text>
+      <rect x="12" y="206" width="222" height="156" rx="16" fill="#FFFFFF"/>
+      <rect x="24" y="218" width="88" height="40" rx="10" fill="#FDEBD3"/>
+      <text x="32" y="233" font-size="9.5" font-weight="700" fill="#92400E">You pasted</text>
+      <text x="32" y="250" font-size="12" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" fill="#0B1220">7xKp…3fQa</text>
+      <text x="123" y="243" font-size="15" font-weight="800" fill="#5A6478" text-anchor="middle">=</text>
+      <rect x="134" y="218" width="88" height="40" rx="10" fill="#EEF1F6"/>
+      <text x="142" y="233" font-size="9.5" font-weight="700" fill="#5A6478">Saved</text>
+      <text x="142" y="250" font-size="12" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" fill="#0B1220">7xKp…3fQa</text>
+      <line x1="24" y1="270" x2="222" y2="270" stroke="#EEF1F6" stroke-width="1.5"/>
+      <text x="24" y="288" font-size="9.5" font-weight="700" fill="#92400E">FULL ADDRESS YOU PASTED</text>
+      <g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="11.5" fill="#0B1220">
+        <text x="24" y="305">7xKpQ<tspan fill="#B45309" font-weight="700">9eHw1RcZ5nTbF2mJ</tspan></text>
+        <text x="24" y="321"><tspan fill="#B45309" font-weight="700">k8LsP4yVd6UhBgCrZ</tspan>3fQa</text>
+      </g>
+      <text x="24" y="346" font-size="10.5" font-weight="700" fill="#0B1220">Only the first 5 and last 4 match.</text>
+      <rect x="12" y="384" width="222" height="40" rx="20" fill="#1A56DB"/>
+      <text x="123" y="408.5" font-size="13" font-weight="700" fill="#FFFFFF" text-anchor="middle">Use my saved address</text>
+      <rect x="12" y="432" width="222" height="40" rx="20" fill="#E4E8EF"/>
+      <text x="123" y="456.5" font-size="13" font-weight="700" fill="#0B1220" text-anchor="middle">Send anyway</text>
+    </g>
+
+    <!-- Phone 2: choose a hold -->
+    <rect x="360" y="40" width="260" height="520" rx="36" fill="#2E3748"/>
+    <g transform="translate(367 47)">
+      <rect width="246" height="506" rx="30" fill="#F3F5F9"/>
+      <circle cx="32" cy="36" r="16" fill="#E4E8EF"/>
+      <path d="M35 29l-7 7 7 7" fill="none" stroke="#0B1220" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="58" y="33" font-size="12.5" font-weight="700" fill="#0B1220">To <tspan font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">7xKp…3fQa</tspan></text>
+      <text x="58" y="49" font-size="10" font-weight="700" fill="#B45309">New address · lookalike</text>
+      <text x="123" y="120" font-size="46" font-weight="800" letter-spacing="-1.5" fill="#0B1220" text-anchor="middle">€300</text>
+      <text x="123" y="142" font-size="11" fill="#5A6478" text-anchor="middle">Balance €1,240.50</text>
+      <rect x="12" y="160" width="222" height="112" rx="16" fill="#FFFFFF"/>
+      <text x="24" y="183" font-size="12.5" font-weight="800" fill="#0B1220">Undo window</text>
+      <rect x="24" y="194" width="62" height="32" rx="9" fill="#EEF1F6"/>
+      <text x="55" y="214" font-size="11" font-weight="700" fill="#0B1220" text-anchor="middle">10 min</text>
+      <rect x="92" y="194" width="62" height="32" rx="9" fill="#1A56DB"/>
+      <text x="123" y="214" font-size="11" font-weight="700" fill="#FFFFFF" text-anchor="middle">1 hour</text>
+      <rect x="160" y="194" width="62" height="32" rx="9" fill="#EEF1F6"/>
+      <text x="191" y="214" font-size="11" font-weight="700" fill="#0B1220" text-anchor="middle">24 hours</text>
+      <text x="24" y="247" font-size="10.5" fill="#5A6478">They can collect after 1 hour.</text>
+      <text x="24" y="262" font-size="10.5" fill="#5A6478">Until then, you can cancel.</text>
+      <g font-size="18" font-weight="600" fill="#0B1220" text-anchor="middle">
+        <text x="55" y="310">1</text><text x="123" y="310">2</text><text x="191" y="310">3</text>
+        <text x="55" y="344">4</text><text x="123" y="344">5</text><text x="191" y="344">6</text>
+        <text x="55" y="378">7</text><text x="123" y="378">8</text><text x="191" y="378">9</text>
+        <text x="55" y="412">.</text><text x="123" y="412">0</text>
+      </g>
+      <g fill="none" stroke="#0B1220" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M184 406l5-6h11v12h-11z"/><path d="M191.5 403.5l5 5M196.5 403.5l-5 5"/>
+      </g>
+      <rect x="12" y="440" width="222" height="42" rx="21" fill="#1A56DB"/>
+      <text x="123" y="465.5" font-size="13.5" font-weight="700" fill="#FFFFFF" text-anchor="middle">Send €300</text>
+    </g>
+
+    <!-- Phone 3: on hold -->
+    <rect x="656" y="40" width="260" height="520" rx="36" fill="#2E3748"/>
+    <g transform="translate(663 47)">
+      <rect width="246" height="506" rx="30" fill="#0B1220"/>
+      <circle cx="32" cy="36" r="16" fill="#1B2230"/>
+      <path d="M27 31l10 10M37 31l-10 10" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"/>
+      <text x="123" y="41" font-size="13" font-weight="800" fill="#FFFFFF" text-anchor="middle">Payment on hold</text>
+      <circle cx="123" cy="150" r="62" fill="none" stroke="#232B3A" stroke-width="9"/>
+      <circle cx="123" cy="150" r="62" fill="none" stroke="#6B9BFF" stroke-width="9" stroke-linecap="round" stroke-dasharray="389.56" stroke-dashoffset="114.9" transform="rotate(-90 123 150)"/>
+      <text x="123" y="156" font-size="28" font-weight="800" fill="#FFFFFF" text-anchor="middle">42:17</text>
+      <text x="123" y="174" font-size="10.5" fill="#98A2B5" text-anchor="middle">left to undo</text>
+      <text x="123" y="250" font-size="22" font-weight="800" fill="#FFFFFF" text-anchor="middle">€300.00</text>
+      <text x="123" y="268" font-size="11" fill="#98A2B5" text-anchor="middle">to <tspan font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" fill="#FFFFFF">7xKp…3fQa</tspan></text>
+      <rect x="12" y="288" width="222" height="124" rx="14" fill="#151B27"/>
+      <line x1="30" y1="319" x2="30" y2="331" stroke="#6B9BFF" stroke-width="2"/>
+      <line x1="30" y1="345" x2="30" y2="357" stroke="#2A3242" stroke-width="2"/>
+      <line x1="30" y1="371" x2="30" y2="383" stroke="#2A3242" stroke-width="2"/>
+      <circle cx="30" cy="312" r="6" fill="#6B9BFF"/>
+      <circle cx="30" cy="338" r="5.5" fill="none" stroke="#6B9BFF" stroke-width="2"/>
+      <circle cx="30" cy="338" r="2.5" fill="#6B9BFF"/>
+      <circle cx="30" cy="364" r="5.5" fill="none" stroke="#3A4356" stroke-width="2"/>
+      <circle cx="30" cy="390" r="5.5" fill="none" stroke="#3A4356" stroke-width="2"/>
+      <text x="46" y="316" font-size="11.5" font-weight="700" fill="#FFFFFF">Sent into hold</text>
+      <text x="46" y="342" font-size="11.5" font-weight="700" fill="#FFFFFF">You can cancel <tspan font-weight="400" fill="#98A2B5">· until 14:32</tspan></text>
+      <text x="46" y="368" font-size="11.5" font-weight="700" fill="#D5DBE5">They collect <tspan font-weight="400" fill="#98A2B5">· after 14:32</tspan></text>
+      <text x="46" y="394" font-size="11.5" font-weight="700" fill="#D5DBE5">Or it comes back <tspan font-weight="400" fill="#98A2B5">· by 3 Oct</tspan></text>
+      <rect x="12" y="430" width="222" height="44" rx="22" fill="#FFFFFF"/>
+      <g transform="translate(55 443) scale(0.75)" fill="none" stroke="#0B1220" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M9 14L4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/>
+      </g>
+      <text x="82" y="457" font-size="14" font-weight="800" fill="#0B1220">Undo payment</text>
+      <text x="123" y="494" font-size="10.5" font-weight="700" fill="#6B9BFF" text-anchor="middle">View on Solana Explorer</text>
+    </g>
+
+    <!-- Phone 4: money's back -->
+    <rect x="952" y="40" width="260" height="520" rx="36" fill="#2E3748"/>
+    <g transform="translate(959 47)">
+      <rect width="246" height="506" rx="30" fill="#1A56DB"/>
+      <circle cx="123" cy="110" r="36" fill="#FFFFFF"/>
+      <g transform="translate(101.4 88.4) scale(1.8)" fill="none" stroke="#1A56DB" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M9 14L4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/>
+      </g>
+      <text x="123" y="184" font-size="26" font-weight="800" fill="#FFFFFF" text-anchor="middle">€300 is back</text>
+      <text x="123" y="208" font-size="12" fill="#DCE6FF" text-anchor="middle">You cancelled before anyone</text>
+      <text x="123" y="224" font-size="12" fill="#DCE6FF" text-anchor="middle">could collect it.</text>
+      <rect x="12" y="244" width="222" height="130" rx="16" fill="#FFFFFF"/>
+      <g font-size="11.5">
+        <text x="26" y="270" fill="#5A6478">Returned to</text><text x="220" y="270" font-weight="700" fill="#0B1220" text-anchor="end">Main · EUR</text>
+        <line x1="26" y1="282" x2="220" y2="282" stroke="#EEF1F6" stroke-width="1.5"/>
+        <text x="26" y="300" fill="#5A6478">Balance</text><text x="220" y="300" font-weight="700" fill="#0B1220" text-anchor="end">€1,240.50</text>
+        <line x1="26" y1="312" x2="220" y2="312" stroke="#EEF1F6" stroke-width="1.5"/>
+        <text x="26" y="330" fill="#5A6478">Cancelled</text><text x="220" y="330" font-weight="700" fill="#0B1220" text-anchor="end">Today, 13:34</text>
+        <line x1="26" y1="342" x2="220" y2="342" stroke="#EEF1F6" stroke-width="1.5"/>
+        <text x="26" y="360" fill="#5A6478">Record</text><text x="220" y="360" font-weight="700" fill="#1A56DB" text-anchor="end">Solana Explorer</text>
+      </g>
+      <rect x="12" y="386" width="222" height="44" rx="14" fill="#2F66E0"/>
+      <text x="26" y="412" font-size="12" font-weight="700" fill="#FFFFFF">Report this lookalike</text>
+      <rect x="170" y="396" width="52" height="24" rx="12" fill="none" stroke="#FFFFFF" stroke-width="1.5"/>
+      <text x="196" y="412" font-size="10.5" font-weight="700" fill="#FFFFFF" text-anchor="middle">Report</text>
+      <rect x="12" y="444" width="222" height="42" rx="21" fill="#FFFFFF"/>
+      <text x="123" y="469.5" font-size="14" font-weight="800" fill="#1A56DB" text-anchor="middle">Done</text>
+    </g>
+
+    <!-- Captions -->
+    <g font-size="13.5" fill="#98A2B5">
+      <text x="66" y="600" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="12" letter-spacing="2" fill="#6B9BFF">01</text>
+      <text x="66" y="624" font-size="16" font-weight="800" fill="#E6EBF3">Kagi checks the address</text>
+      <text x="66" y="648">It looks like your exchange's.</text>
+      <text x="66" y="666">Only the first 5 and last 4</text>
+      <text x="66" y="684">characters match.</text>
+
+      <text x="362" y="600" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="12" letter-spacing="2" fill="#6B9BFF">02</text>
+      <text x="362" y="624" font-size="16" font-weight="800" fill="#E6EBF3">You pick a hold</text>
+      <text x="362" y="648">New payees wait before they can</text>
+      <text x="362" y="666">collect. Trusted ones skip this.</text>
+
+      <text x="658" y="600" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="12" letter-spacing="2" fill="#6B9BFF">03</text>
+      <text x="658" y="624" font-size="16" font-weight="800" fill="#E6EBF3">You can still undo</text>
+      <text x="658" y="648">Until the timer runs out, one</text>
+      <text x="658" y="666">tap cancels the payment.</text>
+
+      <text x="954" y="600" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="12" letter-spacing="2" fill="#6B9BFF">04</text>
+      <text x="954" y="624" font-size="16" font-weight="800" fill="#E6EBF3">The money's back</text>
+      <text x="954" y="648">Nothing lost. If nobody collects</text>
+      <text x="954" y="666">in 7 days, it returns by itself.</text>
+    </g>
+  </g>
+</svg>
