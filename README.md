@@ -59,14 +59,6 @@ Under the hood, a protected payment doesn't go straight to the recipient. It goe
 - **Fees cost a fraction of a cent,** so an extra step per payment costs almost nothing.
 - **Every hold, cancel and return can be checked by anyone** on the Solana Explorer.
 
-## Status
-
-- [x] UI design (clickable prototype)
-- [ ] Escrow program with hold, cancel, claim and auto-return (devnet)
-- [ ] Address checks for first-time payees and lookalike addresses
-- [ ] Wallet creation and usernames
-- [ ] End-to-end demo on devnet
-
 ## What's next
 
 - **Scam recall.** Partner with exchanges and fraud-intelligence services, so that a payment flagged as a scam during its hold window can be stopped before anyone collects it.
